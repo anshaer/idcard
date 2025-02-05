@@ -1,6 +1,7 @@
 # 我的第一个项目 🎉  
 
 这是一个简单的 GitHub 示例仓库。  
+<img src="0001.jpg" alt="My Image" width="300" />
 
 ![替代文字](0001.jpg)
 
