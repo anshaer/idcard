@@ -2,6 +2,8 @@
 
 这是一个简单的 GitHub 示例仓库。  
 
+![Logo]([https://via.placeholder.com/150](https://pbs.twimg.com/profile_images/1820323218647048192/8rG4m8G-_400x400.jpg))
+
 ## 📌 功能  
 - 记录 GitHub 学习进度  
 - 练习 Git 版本控制  
