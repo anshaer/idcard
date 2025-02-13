@@ -1,0 +1,19 @@
+name: Start Live Stream
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小時執行一次
+  workflow_dispatch:  # 允許手動觸發
+
+jobs:
+  start-stream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into VPS and start streaming
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            nohup bash /home/user/start_stream.sh > /home/user/stream.log 2>&1 &
