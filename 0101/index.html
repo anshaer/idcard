@@ -157,5 +157,10 @@
             updateLastUpdated();  
         }, 174000); // 每 3 分鐘更新一次
     </script>
+    <script>
+  if (window.location.hostname === "01.123.com") {
+    window.location.href = "/01/";
+  }
+</script>
 </body>
 </html>
