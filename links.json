@@ -1,0 +1,17 @@
+[
+    {
+        "name": "GitHub",
+        "image": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+        "url": "https://github.com"
+    },
+    {
+        "name": "LinkedIn",
+        "image": "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg",
+        "url": "https://linkedin.com"
+    },
+    {
+        "name": "Twitter",
+        "image": "https://abs.twimg.com/favicons/twitter.2.ico",
+        "url": "https://twitter.com"
+    }
+]
