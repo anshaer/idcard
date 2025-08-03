@@ -3,178 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Loading...</title>
+    <title>個人行事曆與連結</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            min-height: 100vh;
+            color: #333; /* 預設文字顏色 */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
+            min-height: 100vh;
         }
         .container {
             max-width: 600px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            color: var(--text-color, #333); /* 從 config.json 動態設定文字顏色 */
+            box-sizing: border-box;
         }
-        .avatar {
-            display: block;
-            margin: 0 auto 20px;
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile img {
             width: 100px;
             height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #ddd;
         }
-        h1 {
-            text-align: center;
+        .profile h1 {
             font-size: 24px;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
-        .intro {
-            text-align: center;
+        .profile p {
             font-size: 16px;
-            margin-bottom: 20px;
+            margin: 0;
+        }
+        .calendar {
+            margin: 20px 0;
+        }
+        .calendar-day {
+            background: rgba(255, 255, 255, 0.8); /* 半透明白底 */
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        .calendar-day h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+        .calendar-day ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .calendar-day li {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .calendar-day li a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .calendar-day li a:hover {
+            text-decoration: underline;
         }
         .links {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
         }
-        .link-card {
-            width: 100px;
-            text-align: center;
-        }
-        .link-card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-        .link-card a {
-            text-decoration: none;
-            color: var(--text-color, #333);
-            font-size: 14px;
-        }
-        .calendar {
-            margin-top: 20px;
-        }
-        .day {
-            margin-bottom: 15px;
-        }
-        .day h3 {
-            font-size: 18px;
-            margin: 10px 0;
-            color: #007bff;
-        }
-        .event {
-            background: #f8f9fa;
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.8);
             padding: 10px;
-            border-radius: 5px;
-            margin: 5px 0;
-            font-size: 14px;
-        }
-        .event a {
-            color: #007bff;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 300px;
             text-decoration: none;
+            color: inherit;
         }
-        .event a:hover {
-            text-decoration: underline;
+        .link-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
         }
+        /* 響應式設計 */
         @media (min-width: 768px) {
             .container {
-                max-width: 700px;
+                max-width: 800px;
             }
-            .link-card {
-                width: 120px;
+            .profile img {
+                width: 150px;
+                height: 150px;
             }
-            .link-card img {
-                width: 100px;
-                height: 100px;
+            .profile h1 {
+                font-size: 32px;
             }
-            .avatar {
-                width: 120px;
-                height: 120px;
+            .profile p {
+                font-size: 18px;
+            }
+            .calendar-day h3 {
+                font-size: 20px;
+            }
+            .calendar-day li {
+                font-size: 18px;
+            }
+            .link-item {
+                max-width: 400px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img id="avatar" class="avatar" src="" alt="Avatar">
-        <h1 id="title"></h1>
-        <p id="intro" class="intro"></p>
-        <div id="links" class="links"></div>
-        <div id="calendar" class="calendar"></div>
+        <div class="profile">
+            <img src="avatar.jpg" alt="頭像">
+            <h1 id="title">我的個人頁面</h1>
+            <p id="bio">歡迎來到我的頁面，這裡有我的行事曆和連結！</p>
+        </div>
+        <div class="calendar" id="calendar">
+            <!-- 行事曆動態生成 -->
+        </div>
+        <div class="links" id="links">
+            <!-- 個人連結動態生成 -->
+        </div>
     </div>
-
     <script>
-        async function loadData() {
-            try {
-                // 載入 config.json
-                const configResponse = await fetch('config.json');
-                const config = await configResponse.json();
-                document.title = config.tabTitle;
-                document.getElementById('title').textContent = config.title;
-                document.getElementById('intro').textContent = config.intro;
-                document.getElementById('avatar').src = config.avatar;
-                document.body.style.backgroundImage = `url(${config.backgroundImage})`;
-                document.documentElement.style.setProperty('--text-color', config.textColor);
+        // 載入背景圖片
+        fetch('background.json')
+            .then(response => response.json())
+            .then(data => {
+                document.body.style.backgroundImage = `url(${data.backgroundImage})`;
+                document.body.style.color = data.textColor || '#333';
+            })
+            .catch(error => console.error('無法載入背景設定:', error));
 
-                // 載入 links.json
-                const linksResponse = await fetch('links.json');
-                const links = await linksResponse.json();
-                const linksContainer = document.getElementById('links');
-                links.forEach(link => {
-                    const linkCard = document.createElement('div');
-                    linkCard.className = 'link-card';
-                    linkCard.innerHTML = `
-                        <a href="${link.url}" target="_blank">
-                            <img src="${link.image}" alt="${link.name}">
-                            <p>${link.name}</p>
-                        </a>
-                    `;
-                    linksContainer.appendChild(linkCard);
-                });
-
-                // 載入 calendar.json
-                const calendarResponse = await fetch('calendar.json');
-                const calendar = await calendarResponse.json();
-                const calendarContainer = document.getElementById('calendar');
-                calendar.forEach(day => {
+        // 載入行事曆
+        fetch('calendar.json')
+            .then(response => response.json())
+            .then(data => {
+                const calendarDiv = document.getElementById('calendar');
+                data.days.forEach(day => {
                     const dayDiv = document.createElement('div');
-                    dayDiv.className = 'day';
-                    dayDiv.innerHTML = `<h3>${day.day}</h3>`;
-                    day.events.forEach(event => {
-                        const eventDiv = document.createElement('div');
-                        eventDiv.className = 'event';
-                        if (event.url) {
-                            eventDiv.innerHTML = `<a href="${event.url}" target="_blank">${event.text}</a>`;
-                        } else {
-                            eventDiv.textContent = event.text;
-                        }
-                        dayDiv.appendChild(eventDiv);
-                    });
-                    calendarContainer.appendChild(dayDiv);
+                    dayDiv.className = 'calendar-day';
+                    dayDiv.innerHTML = `<h3>${day.date}</h3><ul>${day.events.map(event => 
+                        `<li>${event.time} - ${event.description} ${event.link ? `<a href="${event.link}" target="_blank">連結</a>` : ''}</li>`
+                    ).join('')}</ul>`;
+                    calendarDiv.appendChild(dayDiv);
                 });
-            } catch (error) {
-                console.error('Error loading data:', error);
-            }
-        }
+            })
+            .catch(error => console.error('無法載入行事曆:', error));
 
-        loadData();
+        // 載入個人連結
+        fetch('links.json')
+            .then(response => response.json())
+            .then(data => {
+                const linksDiv = document.getElementById('links');
+                data.links.forEach(link => {
+                    const linkItem = document.createElement('a');
+                    linkItem.className = 'link-item';
+                    linkItem.href = link.url;
+                    linkItem.target = '_blank';
+                    linkItem.innerHTML = `<img src="${link.image}" alt="${link.title}"><span>${link.title}</span>`;
+                    linksDiv.appendChild(linkItem);
+                });
+            })
+            .catch(error => console.error('無法載入連結:', error));
     </script>
 </body>
 </html>
