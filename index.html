@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人行事曆與連結</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title id="title">載入中...</title>
+    <link id="favicon" rel="icon" href="" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,7 +14,7 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #333; /* 預設文字顏色 */
+            color: #333; /* 預設文字顏色，會被settings.json覆蓋 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -126,9 +126,9 @@
 <body>
     <div class="container">
         <div class="profile">
-            <img src="avatar.jpg" alt="頭像">
-            <h1 id="title">我的個人頁面</h1>
-            <p id="bio">歡迎來到我的頁面，這裡有我的行事曆和連結！</p>
+            <img id="avatar" src="" alt="頭像">
+            <h1 id="profile-title">載入中...</h1>
+            <p id="bio">載入中...</p>
         </div>
         <div class="calendar" id="calendar">
             <!-- 行事曆動態生成 -->
@@ -138,12 +138,27 @@
         </div>
     </div>
     <script>
+        // 載入頁面設定（頁籤、頭像、標題、簡介、文字顏色）
+        fetch('settings.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('favicon').href = data.favicon;
+                document.title = data.title;
+                document.getElementById('avatar').src = data.avatar;
+                document.getElementById('profile-title').textContent = data.title;
+                document.getElementById('bio').textContent = data.bio;
+                document.body.style.color = data.textColor;
+                document.querySelectorAll('a').forEach(link => {
+                    link.style.color = data.textColor; // 確保連結文字顏色一致
+                });
+            })
+            .catch(error => console.error('無法載入頁面設定:', error));
+
         // 載入背景圖片
         fetch('background.json')
             .then(response => response.json())
             .then(data => {
                 document.body.style.backgroundImage = `url(${data.backgroundImage})`;
-                document.body.style.color = data.textColor || '#333';
             })
             .catch(error => console.error('無法載入背景設定:', error));
 
