@@ -1,47 +1,43 @@
-[
-    {
-        "day": "星期一",
-        "events": [
-            { "text": "上午9:00 - 會議", "url": "https://zoom.us/j/123456789" },
-            { "text": "下午2:00 - 學習新技術", "url": "" }
-        ]
-    },
-    {
-        "day": "星期二",
-        "events": [
-            { "text": "上午10:00 - 健身", "url": "" },
-            { "text": "下午3:00 - 專案討論", "url": "https://meet.google.com/abc-defg-hij" }
-        ]
-    },
-    {
-        "day": "星期三",
-        "events": [
-            { "text": "全天 - 專案開發", "url": "" }
-        ]
-    },
-    {
-        "day": "星期四",
-        "events": [
-            { "text": "上午11:00 - 客戶會議", "url": "https://zoom.us/j/987654321" },
-            { "text": "晚上7:00 - 朋友聚會", "url": "" }
-        ]
-    },
-    {
-        "day": "星期五",
-        "events": [
-            { "text": "下午1:00 - 報告撰寫", "url": "" }
-        ]
-    },
-    {
-        "day": "星期六",
-        "events": [
-            { "text": "上午8:00 - 戶外活動", "url": "" }
-        ]
-    },
-    {
-        "day": "星期日",
-        "events": [
-            { "text": "全天 - 休息", "url": "" }
-        ]
-    }
-]
+{
+    "days": [
+        {
+            "date": "星期一",
+            "events": [
+                { "time": "09:00", "description": "晨間會議", "link": "https://zoom.us/j/123456789" },
+                { "time": "14:00", "description": "專案討論" }
+            ]
+        },
+        {
+            "date": "星期二",
+            "events": [
+                { "time": "10:00", "description": "學習新技能", "link": "https://example.com/course" }
+            ]
+        },
+        {
+            "date": "星期三",
+            "events": []
+        },
+        {
+            "date": "星期四",
+            "events": [
+                { "time": "15:00", "description": "客戶拜訪" }
+            ]
+        },
+        {
+            "date": "星期五",
+            "events": [
+                { "time": "11:00", "description": "團隊午餐" }
+            ]
+        },
+        {
+            "date": "星期六",
+            "events": []
+        },
+        {
+            "date": "星期日",
+            "events": [
+                { "time": "18:00", "description": "家庭聚會" }
+            ]
+        }
+    ]
+}
