@@ -1,17 +1,19 @@
-[
-    {
-        "name": "GitHub",
-        "image": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-        "url": "https://github.com"
-    },
-    {
-        "name": "LinkedIn",
-        "image": "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg",
-        "url": "https://linkedin.com"
-    },
-    {
-        "name": "Twitter",
-        "image": "https://abs.twimg.com/favicons/twitter.2.ico",
-        "url": "https://twitter.com"
-    }
-]
+{
+    "links": [
+        {
+            "title": "我的Twitter",
+            "url": "https://twitter.com/example",
+            "image": "https://example.com/twitter-icon.png"
+        },
+        {
+            "title": "我的GitHub",
+            "url": "https://github.com/example",
+            "image": "https://example.com/github-icon.png"
+        },
+        {
+            "title": "我的部落格",
+            "url": "https://example.com/blog",
+            "image": "https://example.com/blog-icon.png"
+        }
+    ]
+}
