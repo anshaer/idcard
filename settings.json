@@ -1,7 +1,9 @@
 {
     "favicon": "https://example.com/favicon.ico",
-    "avatar": "https://pbs.twimg.com/profile_images/1951330865625096192/vkOrNuCS_400x400.jpg",
+    "avatar": "https://example.com/avatar.jpg",
     "title": "我的個人頁面",
     "bio": "歡迎來到我的頁面，這裡有我的行事曆和連結！",
-    "textColor": "#781818"
+    "textColor": "#333333",
+    "titleColor": "#0056b3",
+    "bioColor": "#6c757d"
 }
