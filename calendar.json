@@ -1,7 +1,7 @@
 {
     "calendarColor": "#333333",
     "calendarBackgroundColor": "#ffffff",
-    "calendarBackgroundOpacity": 0.9,
+    "calendarBackgroundOpacity": 0.1,
     "days": [
         {
             "date": "星期一",
