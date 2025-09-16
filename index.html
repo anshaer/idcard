@@ -3,155 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的簡易名片</title>
+    <title>名片網頁</title>
     <style>
-        /* 網頁基本設定 */
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #000; /* 未載入背景圖片時的預設色 */
-            background-image: url('B.png');
+            padding: 0;
+            background: #000 url('B.png') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
-        /* 資料顯示區設定 */
         .card-container {
             width: 95%;
-            height: 90%;
-            background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景 */
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            height: 90vh;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
             padding: 20px;
             box-sizing: border-box;
-            display: flex;
-            transition: flex-direction 0.5s ease-in-out;
+            overflow: hidden;
         }
 
-        /* 圖片基本設定 */
-        .img-profile, .img-logo, .img-icon {
-            object-fit: contain; /* 確保圖片不變形 */
-            max-width: 100%;
+        .avatar {
+            width: 40%;
+            height: auto;
             max-height: 100%;
+            object-fit: contain;
         }
 
-        /* 縱向螢幕佈局 (寬度 <= 高度) */
-        @media (orientation: portrait) {
+        .info-container {
+            width: 60%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100%;
+            height: 40%;
+            object-fit: contain;
+        }
+
+        .icon-row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .icon {
+            width: 60px; /* 固定寬度 */
+            height: auto; /* 保持比例 */
+            object-fit: contain;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 60px; /* 固定寬度與 .icon 一致 */
+            height: auto; /* 讓高度自動調整 */
+        }
+
+        .social-link img {
+            width: 60px; /* 固定寬度 */
+            height: auto; /* 保持比例 */
+            object-fit: contain;
+        }
+
+        /* 縱屏設計 (寬高比 <= 1:1) */
+        @media (max-aspect-ratio: 1/1) {
             .card-container {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
             }
 
-            .profile-section {
-                flex: 1;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-            }
-
-            .info-section {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                text-align: center;
-            }
-
-            .logo-section {
-                margin-bottom: 20px;
+            .avatar {
                 width: 80%;
+                max-height: 40%;
+            }
+
+            .info-container {
+                width: 100%;
+                height: auto;
+                justify-content: center;
+            }
+
+            .logo {
+                width: 80%;
+                height: auto;
+                max-height: 30%;
             }
 
             .icon-row {
-                display: flex;
-                justify-content: center;
-                gap: 15px;
-                width: 100%;
                 flex-wrap: wrap;
             }
-            .icon-row img {
-                width: 15%; /* 調整縱向時的圖標大小 */
+
+            .icon {
+                width: 60px; /* 固定寬度 */
+            }
+
+            .social-link {
+                width: 60px; /* 固定寬度 */
+            }
+
+            .social-link img {
+                width: 60px; /* 固定寬度 */
             }
         }
-
-        /* 橫向螢幕佈局 (寬度 > 高度) */
-        @media (orientation: landscape) {
-            .card-container {
-                flex-direction: row;
-            }
-
-            .profile-section {
-                flex: 40%; /* 佔寬度40% */
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .info-section {
-                flex: 60%; /* 佔寬度60% */
-                display: flex;
-                flex-direction: column;
-                padding: 0 20px;
-            }
-            
-            .logo-section {
-                height: 40%;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                margin-bottom: 20px;
-            }
-
-            .logo-section img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-            }
-
-            .language-icons, .social-icons {
-                display: flex;
-                gap: 15px;
-            }
-
-            .language-icons img, .social-icons img {
-                width: 8%; /* 橫向時圖標縮放為資料顯示區寬度的8% */
-            }
-        }
-
     </style>
 </head>
 <body>
     <div class="card-container">
-        <div class="profile-section">
-            <img class="img-profile" src="A.png" alt="頭像">
-        </div>
-
-        <div class="info-section">
-            <div class="logo-section">
-                <img class="img-logo" src="L.png" alt="名子LOGO">
+        <img src="A.png" alt="頭像" class="avatar">
+        <div class="info-container">
+            <img src="L.png" alt="名子(LOGO)" class="logo">
+            <div class="icon-row">
+                <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" alt="語言1" class="icon">
+                <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" class="icon">
+                <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" class="icon">
+                <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" class="icon">
             </div>
-
-            <div class="icon-row language-icons">
-                <img class="img-icon" src="E1.png" alt="語言標示1">
-                <img class="img-icon" src="E2.png" alt="語言標示2">
-                <img class="img-icon" src="E3.png" alt="語言標示3">
-                <img class="img-icon" src="E4.png" alt="語言標示4">
-            </div>
-
-            <div class="icon-row social-icons">
-                <img class="img-icon" src="C1.png" alt="社群標示1">
-                <img class="img-icon" src="C2.png" alt="社群標示2">
-                <img class="img-icon" src="C3.png" alt="社群標示3">
-                <img class="img-icon" src="C4.png" alt="社群標示4">
+            <div class="icon-row">
+                <a href="https://example.com/social1" class="social-link" target="_blank">
+                    <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" alt="社群1" class="icon">
+                </a>
+                <a href="https://example.com/social2" class="social-link" target="_blank">
+                    <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" alt="社群2" class="icon">
+                </a>
+                <a href="https://example.com/social3" class="social-link" target="_blank">
+                    <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" alt="社群3" class="icon">
+                </a>
+                <a href="https://example.com/social4" class="social-link" target="_blank">
+                    <img src="https://anshaer.github.io/idcard/語言/白/中文白.png" alt="社群4" class="icon">
+                </a>
             </div>
         </div>
     </div>
