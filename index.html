@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的簡易名片</title>
+    <style>
+        /* 網頁基本設定 */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000; /* 未載入背景圖片時的預設色 */
+            background-image: url('B.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* 資料顯示區設定 */
+        .card-container {
+            width: 95%;
+            height: 90%;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景 */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            transition: flex-direction 0.5s ease-in-out;
+        }
+
+        /* 圖片基本設定 */
+        .img-profile, .img-logo, .img-icon {
+            object-fit: contain; /* 確保圖片不變形 */
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* 縱向螢幕佈局 (寬度 <= 高度) */
+        @media (orientation: portrait) {
+            .card-container {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .profile-section {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            .info-section {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                text-align: center;
+            }
+
+            .logo-section {
+                margin-bottom: 20px;
+                width: 80%;
+            }
+
+            .icon-row {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .icon-row img {
+                width: 15%; /* 調整縱向時的圖標大小 */
+            }
+        }
+
+        /* 橫向螢幕佈局 (寬度 > 高度) */
+        @media (orientation: landscape) {
+            .card-container {
+                flex-direction: row;
+            }
+
+            .profile-section {
+                flex: 40%; /* 佔寬度40% */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .info-section {
+                flex: 60%; /* 佔寬度60% */
+                display: flex;
+                flex-direction: column;
+                padding: 0 20px;
+            }
+            
+            .logo-section {
+                height: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin-bottom: 20px;
+            }
+
+            .logo-section img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+
+            .language-icons, .social-icons {
+                display: flex;
+                gap: 15px;
+            }
+
+            .language-icons img, .social-icons img {
+                width: 8%; /* 橫向時圖標縮放為資料顯示區寬度的8% */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="profile-section">
+            <img class="img-profile" src="A.png" alt="頭像">
+        </div>
+
+        <div class="info-section">
+            <div class="logo-section">
+                <img class="img-logo" src="L.png" alt="名子LOGO">
+            </div>
+
+            <div class="icon-row language-icons">
+                <img class="img-icon" src="E1.png" alt="語言標示1">
+                <img class="img-icon" src="E2.png" alt="語言標示2">
+                <img class="img-icon" src="E3.png" alt="語言標示3">
+                <img class="img-icon" src="E4.png" alt="語言標示4">
+            </div>
+
+            <div class="icon-row social-icons">
+                <img class="img-icon" src="C1.png" alt="社群標示1">
+                <img class="img-icon" src="C2.png" alt="社群標示2">
+                <img class="img-icon" src="C3.png" alt="社群標示3">
+                <img class="img-icon" src="C4.png" alt="社群標示4">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
