@@ -8,8 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            /* 背景會由 JS 載入 */
-            background: #000 url('背景.png') no-repeat center center fixed; 
+            background: #000 url('data/background/B1.png') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -62,23 +61,24 @@
         }
 
         .icon {
-            width: 60px;
-            height: auto;
+            width: 60px; /* 固定寬度 */
+            height: auto; /* 保持比例 */
             object-fit: contain;
         }
 
         .social-link {
             display: inline-block;
-            width: 60px;
-            height: auto;
+            width: 60px; /* 固定寬度與 .icon 一致 */
+            height: auto; /* 讓高度自動調整 */
         }
 
         .social-link img {
-            width: 60px;
-            height: auto;
+            width: 60px; /* 固定寬度 */
+            height: auto; /* 保持比例 */
             object-fit: contain;
         }
 
+        /* 縱屏設計 (寬高比 <= 1:1) */
         @media (max-aspect-ratio: 1/1) {
             .card-container {
                 flex-direction: column;
@@ -108,21 +108,44 @@
                 flex-wrap: wrap;
             }
 
-            .icon, .social-link, .social-link img {
-                width: 60px;
+            .icon {
+                width: 60px; /* 固定寬度 */
+            }
+
+            .social-link {
+                width: 60px; /* 固定寬度 */
+            }
+
+            .social-link img {
+                width: 60px; /* 固定寬度 */
             }
         }
     </style>
 </head>
 <body>
     <div class="card-container">
-        <img id="avatar-img" alt="頭像" class="avatar">
+        <img src="data/image/0001.jpg" alt="頭像" class="avatar">
         <div class="info-container">
-            <img id="logo-img" alt="名子(LOGO)" class="logo">
-            <div id="social-links-container" class="icon-row"></div>
-            <div id="languages-container" class="icon-row"></div>
+
+            <img src="data/LOGO/0001.png" alt="名子(LOGO)" class="logo">
+
+            <div class="icon-row">
+                <a href="https://x.com/Anshaer_TW_TYC" class="social-link" target="_blank">
+                    <img src="data/link/w/X白.png" alt="社群1" class="icon">
+                </a>
+                <a href="https://www.youtube.com/@Mutsu-Anshaer" class="social-link" target="_blank">
+                    <img src="data/link/w/YT白.png" alt="社群2" class="icon">
+                </a>
+                <a href="https://www.twitch.tv/anshaer" class="social-link" target="_blank">
+                    <img src="data/link/w/圖奇白.png" alt="社群3" class="icon">
+                </a>
+            </div>
+            
+            <div class="icon-row">
+                <img src="data/language/W/ch.png" alt="語1" class="icon">
+                
+            </div>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
