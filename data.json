@@ -1,7 +1,7 @@
 {
   "/a1": {
     "background_color": "#FFD700",
-    "background_image": "背景-a1.png",
+    "background_image": "data/background/B1.png",
     "avatar": "頭像-a1.png",
     "logo": "名子-a1.png",
     "social_links": [
@@ -20,9 +20,11 @@
       { "icon": "語言3-a1.png" }
     ]
   },
+
+  
   "/c2": {
     "background_color": "#ADD8E6",
-    "background_image": "背景-c2.png",
+    "background_image": "data/background/B1.png",
     "avatar": "頭像-c2.png",
     "logo": "名子-c2.png",
     "social_links": [
@@ -47,9 +49,11 @@
       { "icon": "語言1-c2.png" }
     ]
   },
+
+  
   "/": {
-    "background_color": "#000",
-    "background_image": "背景.png",
+    "background_color": "#111",
+    "background_image": "data/background/B1.png",
     "avatar": "頭像.png",
     "logo": "名子.png",
     "social_links": [
