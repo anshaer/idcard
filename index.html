@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: #000 url('data/background/B1.png') no-repeat center center fixed;
+            background: #000 no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -78,8 +78,21 @@
             object-fit: contain;
         }
 
+        /* 默認橫屏樣式 */
+        body {
+            background-image: url('data/background/B1.png');
+        }
+
+        .avatar.landscape {
+            content: url('data/image/0001.jpg'); /* 橫屏頭像 */
+        }
+
         /* 縱屏設計 (寬高比 <= 1:1) */
         @media (max-aspect-ratio: 1/1) {
+            body {
+                background-image: url('data/background/B2.png'); /* 豎屏背景 */
+            }
+
             .card-container {
                 flex-direction: column;
                 justify-content: center;
@@ -89,6 +102,10 @@
             .avatar {
                 width: 80%;
                 max-height: 40%;
+            }
+
+            .avatar.portrait {
+                content: url('data/image/0002.jpg'); /* 豎屏頭像 */
             }
 
             .info-container {
@@ -124,7 +141,7 @@
 </head>
 <body>
     <div class="card-container">
-        <img src="data/image/0001.jpg" alt="頭像" class="avatar">
+        <img src="data/image/0001.jpg" alt="頭像" class="avatar landscape">
         <div class="info-container">
 
             <img src="data/LOGO/0001.png" alt="名子(LOGO)" class="logo">
