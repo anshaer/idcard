@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG 圖案展示</title>
+    <title>SVG 圖案展示 (一行一個)</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,15 +12,16 @@
             color: #333;
         }
 
-        h1, h2 {
+        h1 {
             text-align: center;
+            margin-bottom: 30px;
         }
         
         #controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 40px;
             padding: 20px;
             background-color: #fff;
@@ -30,37 +31,45 @@
 
         .container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 50px;
+            flex-direction: column; /* 改為垂直堆疊 */
+            align-items: center; /* 水平居中 */
+            gap: 40px; /* 每個 SVG 區塊之間的間距 */
         }
 
         .svg-display {
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 20px;
+            padding: 25px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             text-align: center;
-            width: 300px;
+            width: 500px; /* 調整寬度以適應單行佈局 */
+            max-width: 90%; /* 響應式調整 */
         }
 
         .svg-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px; /* 確保 SVG 有足夠的空間顯示 */
+            height: 80px; /* 確保 SVG 有足夠的空間顯示 */
+            margin-bottom: 20px;
         }
 
         pre {
             background-color: #f0f0f0;
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 15px;
             white-space: pre-wrap;
             word-wrap: break-word;
             text-align: left;
             margin-top: 15px;
             font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto; /* 允許橫向滾動以查看完整程式碼 */
+        }
+
+        pre code {
+            display: block; /* 確保 code 區塊佔據整個 pre 空間 */
         }
     </style>
 </head>
@@ -71,77 +80,104 @@
     <div id="controls">
         <label for="colorPicker">選擇 SVG 顏色：</label>
         <input type="color" id="colorPicker" value="#76DBF4">
+        <button id="resetColor">重置顏色</button>
     </div>
 
     <div class="container">
         <div class="svg-display">
             <h2>圖案 1</h2>
             <div class="svg-wrapper">
-                <svg class="color-changeable" width="38" height="38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
+                <svg id="svg1" class="color-changeable" width="38" height="38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
                     <g transform="translate(-905 -35)">
                         <path d="M939.11 46.248C939.132 46.5821 939.132 46.9178 939.132 47.255 939.132 57.5578 931.288 69.4375 916.949 69.4375L916.949 69.4312C912.714 69.4375 908.566 68.2247 905 65.9368 905.616 66.0112 906.235 66.0476 906.856 66.0492 910.367 66.0523 913.778 64.8743 916.538 62.7052 913.202 62.6418 910.276 60.4663 909.254 57.2902 910.423 57.515 911.626 57.4691 912.774 57.1572 909.136 56.4225 906.52 53.2257 906.52 49.5144 906.52 49.4812 906.52 49.4479 906.52 49.4162 907.605 50.0211 908.817 50.3552 910.059 50.3916 906.632 48.1037 905.575 43.5468 907.644 39.9843 911.602 44.8547 917.443 47.8155 923.712 48.1306 923.083 45.4231 923.943 42.5858 925.966 40.681 929.106 37.7281 934.045 37.8801 936.998 41.0198 938.744 40.6763 940.418 40.035 941.949 39.1278 941.366 40.9328 940.148 42.4654 938.521 43.4408 940.068 43.2555 941.577 42.8423 943 42.2121 941.953 43.778 940.636 45.1444 939.11 46.248Z" fill="#76DBF4"/>
                     </g>
                 </svg>
             </div>
             <h3>SVG 程式碼</h3>
-            <pre><code>&lt;svg width="38" height="38" ...&gt;
-    &lt;g transform="translate(-905 -35)"&gt;
-        &lt;path d="..." fill="#76DBF4"/&gt;
-    &lt;/g&gt;
-&lt;/svg&gt;</code></pre>
+            <pre><code id="svgCode1"></code></pre>
         </div>
 
         <div class="svg-display">
             <h2>圖案 2</h2>
             <div class="svg-wrapper">
-                <svg class="color-changeable" width="38" height="38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
+                <svg id="svg2" class="color-changeable" width="38" height="38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
                     <g transform="translate(-905 -35)">
                         <path d="M939.11 46.248C939.132 46.5821 939.132 46.9178 939.132 47.255 939.132 57.5578 931.288 69.4375 916.949 69.4375L916.949 69.4312C912.714 69.4375 908.566 68.2247 905 65.9368 905.616 66.0112 906.235 66.0476 906.856 66.0492 910.367 66.0523 913.778 64.8743 916.538 62.7052 913.202 62.6418 910.276 60.4663 909.254 57.2902 910.423 57.515 911.626 57.4691 912.774 57.1572 909.136 56.4225 906.52 53.2257 906.52 49.5144 906.52 49.4812 906.52 49.4479 906.52 49.4162 907.605 50.0211 908.817 50.3552 910.059 50.3916 906.632 48.1037 905.575 43.5468 907.644 39.9843 911.602 44.8547 917.443 47.8155 923.712 48.1306 923.083 45.4231 923.943 42.5858 925.966 40.681 929.106 37.7281 934.045 37.8801 936.998 41.0198 938.744 40.6763 940.418 40.035 941.949 39.1278 941.366 40.9328 940.148 42.4654 938.521 43.4408 940.068 43.2555 941.577 42.8423 943 42.2121 941.953 43.778 940.636 45.1444 939.11 46.248Z" fill="#76DBF4"/>
                     </g>
                 </svg>
             </div>
             <h3>SVG 程式碼</h3>
-            <pre><code>&lt;svg width="38" height="38" ...&gt;
-    &lt;g transform="translate(-905 -35)"&gt;
-        &lt;path d="..." fill="#76DBF4"/&gt;
-    &lt;/g&gt;
-&lt;/svg&gt;</code></pre>
+            <pre><code id="svgCode2"></code></pre>
         </div>
 
         <div class="svg-display">
             <h2>圖案 3</h2>
             <div class="svg-wrapper">
-                <svg class="color-changeable" width="38" height="38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
+                <svg id="svg3" class="color-changeable" width="38" height="38" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
                     <g transform="translate(-905 -35)">
                         <path d="M939.11 46.248C939.132 46.5821 939.132 46.9178 939.132 47.255 939.132 57.5578 931.288 69.4375 916.949 69.4375L916.949 69.4312C912.714 69.4375 908.566 68.2247 905 65.9368 905.616 66.0112 906.235 66.0476 906.856 66.0492 910.367 66.0523 913.778 64.8743 916.538 62.7052 913.202 62.6418 910.276 60.4663 909.254 57.2902 910.423 57.515 911.626 57.4691 912.774 57.1572 909.136 56.4225 906.52 53.2257 906.52 49.5144 906.52 49.4812 906.52 49.4479 906.52 49.4162 907.605 50.0211 908.817 50.3552 910.059 50.3916 906.632 48.1037 905.575 43.5468 907.644 39.9843 911.602 44.8547 917.443 47.8155 923.712 48.1306 923.083 45.4231 923.943 42.5858 925.966 40.681 929.106 37.7281 934.045 37.8801 936.998 41.0198 938.744 40.6763 940.418 40.035 941.949 39.1278 941.366 40.9328 940.148 42.4654 938.521 43.4408 940.068 43.2555 941.577 42.8423 943 42.2121 941.953 43.778 940.636 45.1444 939.11 46.248Z" fill="#76DBF4"/>
                     </g>
                 </svg>
             </div>
             <h3>SVG 程式碼</h3>
-            <pre><code>&lt;svg width="38" height="38" ...&gt;
-    &lt;g transform="translate(-905 -35)"&gt;
-        &lt;path d="..." fill="#76DBF4"/&gt;
-    &lt;/g&gt;
-&lt;/svg&gt;</code></pre>
+            <pre><code id="svgCode3"></code></pre>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const colorPicker = document.getElementById('colorPicker');
-            const svgs = document.querySelectorAll('.color-changeable path');
+            const resetColorButton = document.getElementById('resetColor');
+            const initialDefaultColor = "#76DBF4"; // 設置初始默認顏色
 
-            // 初始設定顏色
-            const initialColor = colorPicker.value;
-            svgs.forEach(path => {
-                path.style.fill = initialColor;
+            const svgElements = [
+                { svg: document.getElementById('svg1'), codeElement: document.getElementById('svgCode1') },
+                { svg: document.getElementById('svg2'), codeElement: document.getElementById('svgCode2') },
+                { svg: document.getElementById('svg3'), codeElement: document.getElementById('svgCode3') }
+            ];
+
+            // 輔助函數：將 HTML 特殊字符轉義
+            function escapeHtml(html) {
+                const div = document.createElement('div');
+                div.appendChild(document.createTextNode(html));
+                return div.innerHTML;
+            }
+
+            // 輔助函數：更新 SVG 的填充顏色和其程式碼顯示
+            function updateSvgAndCode(svgObj, color) {
+                const path = svgObj.svg.querySelector('path');
+                if (path) {
+                    path.setAttribute('fill', color);
+                }
+
+                // 獲取 SVG 元素的原始外層 HTML (包含所有屬性和內容)
+                let svgOuterHTML = svgObj.svg.outerHTML;
+                
+                // 使用正則表達式來替換 fill 屬性值
+                // 確保只替換 <path d="..." fill="#HEXCODE"/> 中的 fill 屬性
+                svgOuterHTML = svgOuterHTML.replace(/fill="([^"]*?)"/g, `fill="${color}"`);
+
+                svgObj.codeElement.innerHTML = escapeHtml(svgOuterHTML);
+            }
+
+            // 初始化 SVG 顏色和程式碼顯示
+            svgElements.forEach(item => {
+                updateSvgAndCode(item, initialDefaultColor);
             });
 
             // 監聽顏色選擇器變化
             colorPicker.addEventListener('input', (event) => {
                 const newColor = event.target.value;
-                svgs.forEach(path => {
-                    path.style.fill = newColor;
+                svgElements.forEach(item => {
+                    updateSvgAndCode(item, newColor);
+                });
+            });
+
+            // 監聽重置按鈕點擊
+            resetColorButton.addEventListener('click', () => {
+                colorPicker.value = initialDefaultColor; // 將顏色選擇器設置為默認顏色
+                svgElements.forEach(item => {
+                    updateSvgAndCode(item, initialDefaultColor);
                 });
             });
         });
