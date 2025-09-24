@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG 圖案展示 (一行一個)</title>
+    <title>SVG 圖案展示與控制</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,12 +16,12 @@
             text-align: center;
             margin-bottom: 30px;
         }
-        
+
         #controls {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             margin-bottom: 40px;
             padding: 20px;
             background-color: #fff;
@@ -29,11 +29,19 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .container {
             display: flex;
-            flex-direction: column; /* 改為垂直堆疊 */
-            align-items: center; /* 水平居中 */
-            gap: 40px; /* 每個 SVG 區塊之間的間距 */
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
         }
 
         .svg-display {
@@ -43,15 +51,15 @@
             padding: 25px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             text-align: center;
-            width: 500px; /* 調整寬度以適應單行佈局 */
-            max-width: 90%; /* 響應式調整 */
+            width: 500px;
+            max-width: 90%;
         }
 
         .svg-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 80px; /* 確保 SVG 有足夠的空間顯示 */
+            height: 100px; /* 這裡的固定高度確保容器不會隨 SVG 尺寸變化 */
             margin-bottom: 20px;
         }
 
@@ -65,22 +73,51 @@
             margin-top: 15px;
             font-size: 14px;
             line-height: 1.5;
-            overflow-x: auto; /* 允許橫向滾動以查看完整程式碼 */
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        pre code {
+            display: block;
         }
 
-        pre code {
-            display: block; /* 確保 code 區塊佔據整個 pre 空間 */
+        .copy-btn {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #sizeValue {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <h1>SVG 圖案展示與顏色調整</h1>
+    <h1>SVG 圖案展示與控制</h1>
 
     <div id="controls">
-        <label for="colorPicker">選擇 SVG 顏色：</label>
-        <input type="color" id="colorPicker" value="#76DBF4">
-        <button id="resetColor">重置顏色</button>
+        <div class="control-group">
+            <label for="colorPicker">統一調整顏色：</label>
+            <input type="color" id="colorPicker" value="#76DBF4">
+            <button id="resetColor">重置顏色</button>
+        </div>
+        <div class="control-group">
+            <label for="sizeSlider">調整尺寸：</label>
+            <input type="range" id="sizeSlider" min="20" max="100" value="38">
+            <span id="sizeValue">38</span>px
+        </div>
     </div>
 
     <div class="container">
@@ -95,6 +132,7 @@
             </div>
             <h3>SVG 程式碼</h3>
             <pre><code id="svgCode1"></code></pre>
+            <button class="copy-btn" onclick="copyCode('svgCode1')">複製程式碼</button>
         </div>
 
         <div class="svg-display">
@@ -108,6 +146,7 @@
             </div>
             <h3>SVG 程式碼</h3>
             <pre><code id="svgCode2"></code></pre>
+            <button class="copy-btn" onclick="copyCode('svgCode2')">複製程式碼</button>
         </div>
 
         <div class="svg-display">
@@ -121,6 +160,7 @@
             </div>
             <h3>SVG 程式碼</h3>
             <pre><code id="svgCode3"></code></pre>
+            <button class="copy-btn" onclick="copyCode('svgCode3')">複製程式碼</button>
         </div>
     </div>
 
@@ -128,7 +168,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             const colorPicker = document.getElementById('colorPicker');
             const resetColorButton = document.getElementById('resetColor');
-            const initialDefaultColor = "#76DBF4"; // 設置初始默認顏色
+            const sizeSlider = document.getElementById('sizeSlider');
+            const sizeValueSpan = document.getElementById('sizeValue');
+            const initialDefaultColor = "#76DBF4";
+            const initialDefaultSize = 38;
 
             const svgElements = [
                 { svg: document.getElementById('svg1'), codeElement: document.getElementById('svgCode1') },
@@ -143,44 +186,72 @@
                 return div.innerHTML;
             }
 
-            // 輔助函數：更新 SVG 的填充顏色和其程式碼顯示
-            function updateSvgAndCode(svgObj, color) {
-                const path = svgObj.svg.querySelector('path');
-                if (path) {
-                    path.setAttribute('fill', color);
-                }
+            // 輔助函數：更新 SVG 的填充顏色、尺寸和其程式碼顯示
+            function updateSvg(color, size) {
+                svgElements.forEach(item => {
+                    const path = item.svg.querySelector('path');
+                    if (path) {
+                        path.setAttribute('fill', color);
+                    }
+                    
+                    item.svg.setAttribute('width', size);
+                    item.svg.setAttribute('height', size);
 
-                // 獲取 SVG 元素的原始外層 HTML (包含所有屬性和內容)
-                let svgOuterHTML = svgObj.svg.outerHTML;
-                
-                // 使用正則表達式來替換 fill 屬性值
-                // 確保只替換 <path d="..." fill="#HEXCODE"/> 中的 fill 屬性
-                svgOuterHTML = svgOuterHTML.replace(/fill="([^"]*?)"/g, `fill="${color}"`);
+                    // 獲取 SVG 元素的原始外層 HTML
+                    let svgOuterHTML = item.svg.outerHTML;
+                    
+                    // 替換 fill 屬性值
+                    svgOuterHTML = svgOuterHTML.replace(/fill="([^"]*?)"/g, `fill="${color}"`);
+                    
+                    // 替換 width 和 height 屬性值
+                    svgOuterHTML = svgOuterHTML.replace(/width="([^"]*?)"/g, `width="${size}"`);
+                    svgOuterHTML = svgOuterHTML.replace(/height="([^"]*?)"/g, `height="${size}"`);
 
-                svgObj.codeElement.innerHTML = escapeHtml(svgOuterHTML);
+                    item.codeElement.innerHTML = escapeHtml(svgOuterHTML);
+                });
             }
 
-            // 初始化 SVG 顏色和程式碼顯示
-            svgElements.forEach(item => {
-                updateSvgAndCode(item, initialDefaultColor);
-            });
+            // 初始設定
+            sizeSlider.value = initialDefaultSize;
+            sizeValueSpan.textContent = initialDefaultSize;
+            updateSvg(initialDefaultColor, initialDefaultSize);
 
             // 監聽顏色選擇器變化
             colorPicker.addEventListener('input', (event) => {
                 const newColor = event.target.value;
-                svgElements.forEach(item => {
-                    updateSvgAndCode(item, newColor);
-                });
+                const currentSize = sizeSlider.value;
+                updateSvg(newColor, currentSize);
+            });
+
+            // 監聽尺寸滑動條變化
+            sizeSlider.addEventListener('input', (event) => {
+                const newSize = event.target.value;
+                sizeValueSpan.textContent = newSize;
+                const currentColor = colorPicker.value;
+                updateSvg(currentColor, newSize);
             });
 
             // 監聽重置按鈕點擊
             resetColorButton.addEventListener('click', () => {
-                colorPicker.value = initialDefaultColor; // 將顏色選擇器設置為默認顏色
-                svgElements.forEach(item => {
-                    updateSvgAndCode(item, initialDefaultColor);
-                });
+                colorPicker.value = initialDefaultColor;
+                sizeSlider.value = initialDefaultSize;
+                sizeValueSpan.textContent = initialDefaultSize;
+                updateSvg(initialDefaultColor, initialDefaultSize);
             });
         });
+
+        // 全域函數：複製程式碼到剪貼簿
+        function copyCode(codeElementId) {
+            const codeElement = document.getElementById(codeElementId);
+            const textToCopy = codeElement.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('程式碼已複製到剪貼簿！');
+            }).catch(err => {
+                console.error('複製失敗: ', err);
+                alert('複製失敗，請手動選取程式碼。');
+            });
+        }
     </script>
 
 </body>
